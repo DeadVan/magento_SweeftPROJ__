@@ -1,4 +1,7 @@
 import baseDir.utils.RandomUtils;
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.Test;
 
 import static baseDir.SettingsReader.*;
@@ -6,8 +9,9 @@ import static baseDir.SettingsReader.*;
 public class MagentoTest extends BaseTest {
 
     private final MagentoTestSteps magentoTestSteps = new MagentoTestSteps();
-
-    @Test(testName = "Registration and buying product",dataProvider = "registrationData", dataProviderClass = RandomUtils.class)
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Registration and buying product Test")
+    @Test(dataProvider = "registrationData", dataProviderClass = RandomUtils.class)
     public void MagentoWebAppTest(String firstName, String lastName, String email, String password) {
         magentoTestSteps.assertVerifyProjectPageIsOpen();
         magentoTestSteps.clickCreateAccountButton();
@@ -31,7 +35,9 @@ public class MagentoTest extends BaseTest {
         magentoTestSteps.clickingPlaceOrderButton();
         magentoTestSteps.assertVerifySuccessPageIsOpen();
     }
-    @Test(testName = "Authorization with correct credentials")
+    @Severity(SeverityLevel.BLOCKER)
+    @Description("Login test with correct credentials")
+    @Test()
     public void MagentoAuthorizationTest(){
         magentoTestSteps.assertVerifyProjectPageIsOpen();
         magentoTestSteps.clickSignInButton();
@@ -39,8 +45,9 @@ public class MagentoTest extends BaseTest {
         magentoTestSteps.fillLoginFieldsAndClickSignInButton(getTetData("email"), getTetData("password"));
         magentoTestSteps.verifyThatAuthorizationWasSuccesfull(getTetData("first.name"),getTetData("last.name"));
     }
-
-    @Test(testName = "Authorization with wrong credentials")
+    @Severity(SeverityLevel.BLOCKER)
+    @Description("Login test with wrong credentials")
+    @Test()
     public void MagentoWrongAuthorizationTest(){
         magentoTestSteps.assertVerifyProjectPageIsOpen();
         magentoTestSteps.clickSignInButton();
